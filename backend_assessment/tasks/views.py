@@ -4,10 +4,24 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
 from .models import Task, Label
 from .serializers import TaskSerializer, LabelSerializer
+from django.contrib.auth.models import User
 
 @api_view(['GET'])
 def home(request):
-    return Response({"message": "Welcome to the Task and Label API"})
+    task_count = Task.objects.count()
+    label_count = Label.objects.count()
+    total_users = User.objects.count()
+
+    data = {
+        "message": "Welcome to the Task and Label API",
+        "statistics": {
+            "total_tasks": task_count,
+            "total_labels": label_count,
+            "total_users": total_users
+        }
+    }
+
+    return Response(data)
 
 # Label Views ---------
 @api_view(['GET', 'POST'])
