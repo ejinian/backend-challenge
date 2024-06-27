@@ -23,16 +23,17 @@ def home(request):
 
     return Response(data)
 
-# Label Views ---------
 @api_view(['GET', 'POST'])
 @permission_classes([IsAuthenticated])
 def label_list(request):
+    """GET or POST to the /labels/ route"""
     if request.method == 'GET':
         labels = Label.objects.filter(owner=request.user)
         serializer = LabelSerializer(labels, many=True)
         return Response(serializer.data)
     elif request.method == 'POST':
         serializer = LabelSerializer(data=request.data)
+        # validating data from the body
         if serializer.is_valid():
             serializer.save(owner=request.user)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -41,7 +42,9 @@ def label_list(request):
 @api_view(['GET', 'PUT', 'DELETE'])
 @permission_classes([IsAuthenticated])
 def label_detail(request, pk):
+    """GET, PUT, or DELETE to the /labels/<label_id> route"""
     try:
+        # resources can only be accessed by their creator
         label = Label.objects.get(pk=pk, owner=request.user)
     except Label.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
@@ -59,10 +62,10 @@ def label_detail(request, pk):
         label.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
-# Task Views ---------
 @api_view(['GET', 'POST'])
 @permission_classes([IsAuthenticated])
 def task_list(request):
+    """GET or POST to the /tasks/ route"""
     if request.method == 'GET':
         tasks = Task.objects.filter(owner=request.user)
         serializer = TaskSerializer(tasks, many=True)
@@ -77,6 +80,7 @@ def task_list(request):
 @api_view(['GET', 'PUT', 'DELETE'])
 @permission_classes([IsAuthenticated])
 def task_detail(request, pk):
+    """GET, PUT, or DELETE to the /tasks/<task_id> route"""
     try:
         task = Task.objects.get(pk=pk, owner=request.user)
     except Task.DoesNotExist:
