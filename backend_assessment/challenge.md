@@ -14,10 +14,10 @@
 Open an API testing platform (e.g. Postman) and configure the following routes:
 
 ### Authentication POST (required for each route)
-1. `localhost:8000/api/auth/token/` Body: `{ "username": <your_superuser_username>, "password": <your_superuser_password> }
+1. `localhost:8000/api/auth/token/` Body: `{ "username": <your_superuser_username>, "password": <your_superuser_password> }`\
 Copy the response body's `access` value. This will expire after 1000 minutes (time can be changed in `settings.py`).
 Ensure that your authorization headers include "Authorization" for the key and the JWT token for the value.
-2. (Bonus) `localhost:8000/api/auth/token/refresh/` Body: { "username": <your_superuser_username>, "password": <your_superuser_password>, "refresh": <your_refresh_token> }
+2. (Bonus) `localhost:8000/api/auth/token/refresh/` Body: `{ "username": <your_superuser_username>, "password": <your_superuser_password>, "refresh": <your_refresh_token> }`
 
 ### GET Requests
 1. `localhost:8000/api/labels/`
