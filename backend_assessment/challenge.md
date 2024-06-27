@@ -35,8 +35,12 @@ Ensure that your authorization headers include "Authorization" for the key and t
 1. `localhost:8000/api/labels/<label_id>/`
 2. `localhost:8000/api/tasks/<task_id>/`
 
+*Already existing superadmin credentials:*
+- Username: `ernest`
+- Password: `Testing321`
+
 Alternatively, you can navigate to `localhost:8000/admin` and log in using your superuser credentials. Navigate to the left and create `Label`, `Task`, or `User` objects for testing.
-Every instance of `Label` will be shown with its name and every instance of `Task` with be shown with its title.
+Every instance of `Label` will be shown with its name and every instance of `Task` with be shown with its title. There should already be multiple test objects, but you can delete the `db.sqlite3` file and run `python3 manage.py migrate` to recreate it.
 
 ## Design
 
