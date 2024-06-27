@@ -1,14 +1,16 @@
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
 from .models import Task, Label
 from .serializers import TaskSerializer, LabelSerializer
 
 # Label Views ---------
 @api_view(['GET', 'POST'])
+@permission_classes([IsAuthenticated])
 def label_list(request):
     if request.method == 'GET':
-        labels = Label.objects.all()
+        labels = Label.objects.filter(owner=request.user)
         serializer = LabelSerializer(labels, many=True)
         return Response(serializer.data)
     elif request.method == 'POST':
@@ -19,9 +21,10 @@ def label_list(request):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET', 'PUT', 'DELETE'])
+@permission_classes([IsAuthenticated])
 def label_detail(request, pk):
     try:
-        label = Label.objects.get(pk=pk)
+        label = Label.objects.get(pk=pk, owner=request.user)
     except Label.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
 
@@ -40,9 +43,10 @@ def label_detail(request, pk):
 
 # Task Views ---------
 @api_view(['GET', 'POST'])
+@permission_classes([IsAuthenticated])
 def task_list(request):
     if request.method == 'GET':
-        tasks = Task.objects.all()
+        tasks = Task.objects.filter(owner=request.user)
         serializer = TaskSerializer(tasks, many=True)
         return Response(serializer.data)
     elif request.method == 'POST':
@@ -53,9 +57,10 @@ def task_list(request):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET', 'PUT', 'DELETE'])
+@permission_classes([IsAuthenticated])
 def task_detail(request, pk):
     try:
-        task = Task.objects.get(pk=pk)
+        task = Task.objects.get(pk=pk, owner=request.user)
     except Task.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
 
