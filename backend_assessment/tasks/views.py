@@ -5,6 +5,10 @@ from rest_framework import status
 from .models import Task, Label
 from .serializers import TaskSerializer, LabelSerializer
 
+@api_view(['GET'])
+def home(request):
+    return Response({"message": "Welcome to the Task and Label API"})
+
 # Label Views ---------
 @api_view(['GET', 'POST'])
 @permission_classes([IsAuthenticated])
