@@ -4,7 +4,7 @@
 ## How to run:
 1. Install python3 and pip3
 2. Install Django: `pip3 install Django==3.1.4`, `pip3 install djangorestframework==3.15.2`, `djangorestframework-simplejwt==5.3.1`
-3. Clone repo and `cd` into it
+3. Clone repo and `cd` into `backend_assessment`
 4. Run migrations: `python3 manage.py migrate`
 5. Create test admin user: `python3 manage.py createsuperuser`
 6. Run server: `python3 manage.py runserver`
